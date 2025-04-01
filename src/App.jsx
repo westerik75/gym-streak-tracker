@@ -174,7 +174,7 @@ function NeutjesCounter() {
     labels: last5Days,
     datasets: [{
       label: "Neutjes per Day",
-      data: last10Days.map(date => NeutjeHistory[date] || 0),
+      data: last5Days.map(date => NeutjeHistory[date] || 0),
       fill: false,
       borderColor: "rgb(255, 99, 132)",
       tension: 0.3
