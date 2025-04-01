@@ -47,6 +47,7 @@ export default function App() {
           <h2 className="text-xl font-bold mb-2">🏋️ Gym Streak</h2>
           <p className="text-3xl mb-4">{streak} weeks</p>
           <Button onClick={logGymVisit}>Went to the Gym</Button>
+          <Button onClick={() => { setStreak(0); setLastLoggedWeek(null);}}>Reset</Button>
         </CardContent>
       </Card>
     </div>
