@@ -41,7 +41,7 @@ export default function App() {
   };
 
   return (
-    <div style={{ display:"flex", flexDirection: "column", gap: "1rem"}}>
+    <div className="flex flex-col space-y-4">
       <Card>
         <CardContent>
           <h2 className="text-xl font-bold mb-2">🏋️ Gym Streak</h2>
@@ -53,3 +53,4 @@ export default function App() {
     </div>
   );
 }
+
