@@ -116,7 +116,7 @@ function BeerCounter() {
       tension: 0.3
     }]
   };
-  
+
   const chartOptions = {
     scales: {
       y: {
@@ -136,7 +136,7 @@ function BeerCounter() {
             <Button onClick={resetBeer}>Reset</Button>
           </div>
           <div className="mt-6">
-            <Line data={chartData} />
+            <Line data={chartData} options={chartOptions} />
           </div>
         </CardContent>
       </Card>
@@ -210,7 +210,7 @@ function NeutjesCounter() {
             <Button onClick={resetNeutje}>Reset</Button>
           </div>
           <div className="mt-6">
-            <Line data={chartData} />
+            <Line data={chartData} options={chartOptions} />
           </div>
         </CardContent>
       </Card>
