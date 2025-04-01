@@ -42,7 +42,6 @@ export default function App() {
 
   return (
     <div style={{ display:"flex", flexDirection: "column", gap: "1rem"}}>
-    //<div className="p-4 max-w-sm mx-auto text-center">
       <Card>
         <CardContent>
           <h2 className="text-xl font-bold mb-2">🏋️ Gym Streak</h2>
