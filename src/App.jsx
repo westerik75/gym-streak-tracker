@@ -2,8 +2,21 @@
 import { useState, useEffect } from "react";
 import { Card, CardContent } from "./components/ui/card";
 import { Button } from "./components/ui/button";
+import { Line } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+} from "chart.js";
 
-export default function App() {
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+
+function GymStreakTracker() {
   const [streak, setStreak] = useState(0);
   const [lastLoggedWeek, setLastLoggedWeek] = useState(null);
 
@@ -41,16 +54,92 @@ export default function App() {
   };
 
   return (
-    <div className="flex flex-col space-y-4">
+    <div className="p-4 max-w-sm mx-auto text-center mb-10">
       <Card>
         <CardContent>
           <h2 className="text-xl font-bold mb-2">🏋️ Gym Streak</h2>
           <p className="text-3xl mb-4">{streak} weeks</p>
-          <Button onClick={logGymVisit}>Went to the Gym</Button>
-          <Button onClick={() => { setStreak(0); setLastLoggedWeek(null);}}>Reset</Button>
+          <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+            <Button onClick={logGymVisit}>Went to the Gym</Button>
+            <Button onClick={() => { setStreak(0); setLastLoggedWeek(null); }}>Reset</Button>
+          </div>
         </CardContent>
       </Card>
     </div>
   );
 }
 
+function BeerCounter() {
+  const [todayBeers, setTodayBeers] = useState(0);
+  const [beerHistory, setBeerHistory] = useState({});
+
+  const todayKey = new Date().toISOString().split("T")[0];
+
+  useEffect(() => {
+    const saved = JSON.parse(localStorage.getItem("beerHistory") || "{}");
+    const current = saved[todayKey] || 0;
+    setBeerHistory(saved);
+    setTodayBeers(current);
+  }, []);
+
+  const updateStorage = (newCount) => {
+    const updated = { ...beerHistory, [todayKey]: newCount };
+    setBeerHistory(updated);
+    localStorage.setItem("beerHistory", JSON.stringify(updated));
+  };
+
+  const addBeer = () => {
+    const newCount = todayBeers + 1;
+    setTodayBeers(newCount);
+    updateStorage(newCount);
+  };
+
+  const resetBeer = () => {
+    setTodayBeers(0);
+    updateStorage(0);
+  };
+
+  const last10Days = [...Array(10)].map((_, i) => {
+    const d = new Date();
+    d.setDate(d.getDate() - (9 - i));
+    return d.toISOString().split("T")[0];
+  });
+
+  const chartData = {
+    labels: last10Days,
+    datasets: [{
+      label: "Beers per Day",
+      data: last10Days.map(date => beerHistory[date] || 0),
+      fill: false,
+      borderColor: "rgb(255, 99, 132)",
+      tension: 0.3
+    }]
+  };
+
+  return (
+    <div className="p-4 max-w-sm mx-auto text-center">
+      <Card>
+        <CardContent>
+          <h2 className="text-xl font-bold mb-2">🍺 Beer Counter</h2>
+          <p className="text-3xl mb-4">{todayBeers} beers today</p>
+          <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+            <Button onClick={addBeer}>Add 1 Beer</Button>
+            <Button onClick={resetBeer}>Reset</Button>
+          </div>
+          <div className="mt-6">
+            <Line data={chartData} />
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
+export default function App() {
+  return (
+    <>
+      <GymStreakTracker />
+      <BeerCounter />
+    </>
+  );
+}

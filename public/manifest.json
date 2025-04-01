@@ -1,7 +1,7 @@
 
 {
-  "short_name": "GymStreak",
-  "name": "Gym Streak Tracker",
+  "short_name": "TrackIt",
+  "name": "Gym and Beer Tracker",
   "icons": [
     {
       "src": "/icon-192.png",
