@@ -11,7 +11,8 @@ import {
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  scales
 } from "chart.js";
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
@@ -115,6 +116,14 @@ function BeerCounter() {
       tension: 0.3
     }]
   };
+  
+  const chartOptions = {
+    scales: {
+      y: {
+          beginAtZero: true
+      }
+    }
+  };
 
   return (
     <div className="p-4 max-w-sm mx-auto text-center">
@@ -180,6 +189,15 @@ function NeutjesCounter() {
       tension: 0.3
     }]
   };
+
+  const chartOptions = {
+    scales: {
+      y: {
+          beginAtZero: true
+      }
+    }
+  };
+
 
   return (
     <div className="p-4 max-w-sm mx-auto text-center">
