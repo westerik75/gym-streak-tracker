@@ -102,7 +102,7 @@ function BeerCounter() {
   const last10Days = [...Array(10)].map((_, i) => {
     const d = new Date();
     d.setDate(d.getDate() - (9 - i));
-    return d.toISOString().split("T")[0];
+    return d.toLocaleDateString('en-US', { weekday: 'long' });
   });
 
   const chartData = {
@@ -185,7 +185,7 @@ function NeutjesCounter() {
     <div className="p-4 max-w-sm mx-auto text-center">
       <Card>
         <CardContent>
-          <h2 className="text-xl font-bold mb-2">🍺 Neutje Counter</h2>
+          <h2 className="text-xl font-bold mb-2">🍷 Neutjes Counter</h2>
           <p className="text-3xl mb-4">{todayNeutjes} Neutjes today</p>
           <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
             <Button onClick={addNeutje}>Add 1 Neutje</Button>
