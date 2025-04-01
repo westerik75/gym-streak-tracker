@@ -164,14 +164,14 @@ function NeutjesCounter() {
     updateStorage(0);
   };
 
-  const last10Days = [...Array(10)].map((_, i) => {
+  const last5Days = [...Array(5)].map((_, i) => {
     const d = new Date();
     d.setDate(d.getDate() - (9 - i));
-    return d.toISOString().split("T")[0];
+    return d.toLocaleDateString('en-US', { weekday: 'long' });
   });
 
   const chartData = {
-    labels: last10Days,
+    labels: last5Days,
     datasets: [{
       label: "Neutjes per Day",
       data: last10Days.map(date => NeutjeHistory[date] || 0),
