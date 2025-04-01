@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 
-export default function GymStreakTracker() {
+import { useState, useEffect } from "react";
+import { Card, CardContent } from "./components/ui/card";
+import { Button } from "./components/ui/button";
+
+export default function App() {
   const [streak, setStreak] = useState(0);
   const [lastLoggedWeek, setLastLoggedWeek] = useState(null);
 
@@ -29,25 +30,23 @@ export default function GymStreakTracker() {
 
   const logGymVisit = () => {
     const currentWeek = getCurrentWeek();
-    if (lastLoggedWeek === currentWeek) return; // Already logged this week
+    if (lastLoggedWeek === currentWeek) return;
 
     if (lastLoggedWeek === currentWeek - 1 || lastLoggedWeek === null) {
       setStreak(streak + 1);
     } else {
-      setStreak(1); // Reset streak
+      setStreak(1);
     }
     setLastLoggedWeek(currentWeek);
   };
 
   return (
-    <div className="p-4 max-w-sm mx-auto">
-      <Card className="text-center">
+    <div className="p-4 max-w-sm mx-auto text-center">
+      <Card>
         <CardContent>
           <h2 className="text-xl font-bold mb-2">🏋️ Gym Streak</h2>
           <p className="text-3xl mb-4">{streak} weeks</p>
-          <Button onClick={logGymVisit} className="w-full text-lg">
-            Went to the Gym
-          </Button>
+          <Button onClick={logGymVisit}>Went to the Gym</Button>
         </CardContent>
       </Card>
     </div>
