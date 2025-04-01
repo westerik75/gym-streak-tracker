@@ -16,58 +16,58 @@ import {
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-function GymStreakTracker() {
-  const [streak, setStreak] = useState(0);
-  const [lastLoggedWeek, setLastLoggedWeek] = useState(null);
+// function GymStreakTracker() {
+//   const [streak, setStreak] = useState(0);
+//   const [lastLoggedWeek, setLastLoggedWeek] = useState(null);
 
-  useEffect(() => {
-    const storedStreak = localStorage.getItem("gymStreak");
-    const storedWeek = localStorage.getItem("lastLoggedWeek");
-    if (storedStreak) setStreak(parseInt(storedStreak));
-    if (storedWeek) setLastLoggedWeek(parseInt(storedWeek));
-  }, []);
+//   useEffect(() => {
+//     const storedStreak = localStorage.getItem("gymStreak");
+//     const storedWeek = localStorage.getItem("lastLoggedWeek");
+//     if (storedStreak) setStreak(parseInt(storedStreak));
+//     if (storedWeek) setLastLoggedWeek(parseInt(storedWeek));
+//   }, []);
 
-  useEffect(() => {
-    localStorage.setItem("gymStreak", streak);
-    if (lastLoggedWeek !== null) {
-      localStorage.setItem("lastLoggedWeek", lastLoggedWeek);
-    }
-  }, [streak, lastLoggedWeek]);
+//   useEffect(() => {
+//     localStorage.setItem("gymStreak", streak);
+//     if (lastLoggedWeek !== null) {
+//       localStorage.setItem("lastLoggedWeek", lastLoggedWeek);
+//     }
+//   }, [streak, lastLoggedWeek]);
 
-  const getCurrentWeek = () => {
-    const now = new Date();
-    const startOfYear = new Date(now.getFullYear(), 0, 1);
-    const pastDaysOfYear = (now - startOfYear) / 86400000;
-    return Math.floor((pastDaysOfYear + startOfYear.getDay()) / 7);
-  };
+//   const getCurrentWeek = () => {
+//     const now = new Date();
+//     const startOfYear = new Date(now.getFullYear(), 0, 1);
+//     const pastDaysOfYear = (now - startOfYear) / 86400000;
+//     return Math.floor((pastDaysOfYear + startOfYear.getDay()) / 7);
+//   };
 
-  const logGymVisit = () => {
-    const currentWeek = getCurrentWeek();
-    if (lastLoggedWeek === currentWeek) return;
+//   const logGymVisit = () => {
+//     const currentWeek = getCurrentWeek();
+//     if (lastLoggedWeek === currentWeek) return;
 
-    if (lastLoggedWeek === currentWeek - 1 || lastLoggedWeek === null) {
-      setStreak(streak + 1);
-    } else {
-      setStreak(1);
-    }
-    setLastLoggedWeek(currentWeek);
-  };
+//     if (lastLoggedWeek === currentWeek - 1 || lastLoggedWeek === null) {
+//       setStreak(streak + 1);
+//     } else {
+//       setStreak(1);
+//     }
+//     setLastLoggedWeek(currentWeek);
+//   };
 
-  return (
-    <div className="p-4 max-w-sm mx-auto text-center mb-10">
-      <Card>
-        <CardContent>
-          <h2 className="text-xl font-bold mb-2">🏋️ Gym Streak</h2>
-          <p className="text-3xl mb-4">{streak} weeks</p>
-          <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-            <Button onClick={logGymVisit}>Went to the Gym</Button>
-            <Button onClick={() => { setStreak(0); setLastLoggedWeek(null); }}>Reset</Button>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
-  );
-}
+//   return (
+//     <div className="p-4 max-w-sm mx-auto text-center mb-10">
+//       <Card>
+//         <CardContent>
+//           <h2 className="text-xl font-bold mb-2">🏋️ Gym Streak</h2>
+//           <p className="text-3xl mb-4">{streak} weeks</p>
+//           <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+//             <Button onClick={logGymVisit}>Went to the Gym</Button>
+//             <Button onClick={() => { setStreak(0); setLastLoggedWeek(null); }}>Reset</Button>
+//           </div>
+//         </CardContent>
+//       </Card>
+//     </div>
+//   );
+// }
 
 function BeerCounter() {
   const [todayBeers, setTodayBeers] = useState(0);
@@ -205,7 +205,7 @@ function NeutjesCounter() {
 export default function App() {
   return (
     <>
-      <GymStreakTracker />
+ {/* <GymStreakTracker /> */}
       <BeerCounter />
       <NeutjesCounter />
     </>

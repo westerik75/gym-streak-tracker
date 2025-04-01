@@ -1,0 +1,65 @@
+function NeutjesCounter() {
+  const [todayNeutjes, setTodayNeutjes] = useState(0);
+  const [NeutjeHistory, setNeutjeHistory] = useState({});
+
+  const todayKey = new Date().toISOString().split("T")[0];
+
+  useEffect(() => {
+    const saved = JSON.parse(localStorage.getItem("NeutjeHistory") || "{}");
+    const current = saved[todayKey] || 0;
+    setNeutjeHistory(saved);
+    setTodayNeutjes(current);
+  }, []);
+
+  const updateStorage = (newCount) => {
+    const updated = { ...NeutjeHistory, [todayKey]: newCount };
+    setNeutjeHistory(updated);
+    localStorage.setItem("NeutjeHistory", JSON.stringify(updated));
+  };
+
+  const addNeutje = () => {
+    const newCount = todayNeutjes + 1;
+    setTodayNeutjes(newCount);
+    updateStorage(newCount);
+  };
+
+  const resetNeutje = () => {
+    setTodayNeutjes(0);
+    updateStorage(0);
+  };
+
+  const last10Days = [...Array(10)].map((_, i) => {
+    const d = new Date();
+    d.setDate(d.getDate() - (9 - i));
+    return d.toISOString().split("T")[0];
+  });
+
+  const chartData = {
+    labels: last10Days,
+    datasets: [{
+      label: "Neutjes per Day",
+      data: last10Days.map(date => NeutjeHistory[date] || 0),
+      fill: false,
+      borderColor: "rgb(255, 99, 132)",
+      tension: 0.3
+    }]
+  };
+
+  return (
+    <div className="p-4 max-w-sm mx-auto text-center">
+      <Card>
+        <CardContent>
+          <h2 className="text-xl font-bold mb-2">🍺 Neutje Counter</h2>
+          <p className="text-3xl mb-4">{todayNeutjes} Neutjes today</p>
+          <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+            <Button onClick={addNeutje}>Add 1 Neutje</Button>
+            <Button onClick={resetNeutje}>Reset</Button>
+          </div>
+          <div className="mt-6">
+            <Line data={chartData} />
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
